@@ -1,4 +1,4 @@
-# Recurrences Worksheet Generator
+# Master Theorem Worksheet Generator
 
 ## Synopsis
 This is a webpage-ish project that will generate worksheets for "Recurrence"
