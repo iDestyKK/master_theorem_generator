@@ -1,16 +1,15 @@
 <html>
 	<head>
-		<title>Recurrence Worksheet Generator</title>
+		<title>Master Theorem Worksheet Generator</title>
 	</head>
 
 	<body>
-		<h1>Recurrences Worksheet Generator</h1>
+		<h1>Master Theorem Worksheet Generator</h1>
 		<p>
 			Generator for practicing using the "Master Theorem" to find time
 			complexities in recurrence relations. Generation is based on seed
-			and the number of problems specified. To get the answer key to a
-			generated worksheet, change the URL from <code>worksheet.php</code>
-			to <code>answerkey.php</code>.
+			and the number of problems specified. Worksheets come with answer
+			keys linked on the page so you can evaluate your answers.
 		</p>
 
 		<h3>Generator:</h3>
