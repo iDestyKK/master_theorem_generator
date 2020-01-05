@@ -182,12 +182,39 @@ function solve_get_case($p, $form) {
 }
 
 function generate_problem() {
-	$a  = 2 + (rand() % 24);
-	$b  = 2 + (rand() %  9);
-	$f1 = 2 + (rand() % 24);
-	$f2 = 2 + (rand() %  9);
-	$f3 = 2 + (rand() %  9);
-	$f  = rand() % 10;
+	if ((rand() % 4) == 0) {
+		//Play a little smart... Try to force Case 2
+		$f = rand() % 10;
+
+		//Determine which Case 2 preset to force
+		$c = rand() % 4;
+
+		if ($c == 0) {
+			//Same a and b. rhs = n^1
+			$f = 5;
+			$a = $b = 2 + (rand() % 24);
+			$f1 = 1;
+			$f2 = $f3 = 0;
+		}
+		else {
+			//a = 1, b = any, rhs = constant
+			$f  = 1;
+			$a  = 1;
+			$b  = 2 + (rand() %  9);
+			$f1 = 2 + (rand() % 24);
+			$f2 = $f3 = 0;
+		}
+	}
+	else {
+		//Force either Case 1 or 3.
+		//There is still a slight possibility of a Case 2, btw.
+		$a  = 2 + (rand() % 24);
+		$b  = 2 + (rand() %  9);
+		$f1 = 2 + (rand() % 24);
+		$f2 = 2 + (rand() %  9);
+		$f3 = 2 + (rand() %  9);
+		$f  = rand() % 10;
+	}
 
 	return Array(
 		"a"  => $a,
