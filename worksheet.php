@@ -84,12 +84,108 @@ $form = Array(
 			'&radic;<span class = "radic">n</span><sup>%d</sup> lg(n)<sup>%d</sup>',
 			'n<sup>%d</sup> lg(n)<sup>%d</sup>'
 		)
-	)
+	),
+	"math" => Array(
+		"init" => "",
+		"form" => Array(
+			'sqrt(%d)',
+			'%d',
+			'sqrt(%d) * log(n, 2)',
+			'%d * log(n, 2)',
+			'pow(sqrt(n), %d)',
+			'pow(n, %d)',
+			'pow(sqrt(n), %d) * log(n, 2)',
+			'pow(n, %d) * log(n, 2)',
+			'pow(sqrt(n), %d) * pow(log(n, 2), %d)',
+			'pow(n, %d) * pow(log(n, 2), %d)'
+		)
+	),
 );
+
+/*
+ * solve_get_case
+ *
+ * Gets the Master Theorem case (1-3) for solving the problem. This is critical
+ * in generating a solution as it determines which procedure to do to get the
+ * correct answer.
+ */
+
+function solve_get_case($p, $form) {
+	/*
+	 * Recall forms:
+	 *   0 - sqrt(%d)
+	 *   1 - %d
+	 *   2 - sqrt(%d) * lg(n)
+	 *   3 - %d * lg(n)
+	 *   4 - sqrt(n)^%d
+	 *   5 - n^%d
+	 *   6 - sqrt(n)^%d * lg(n)
+	 *   7 - n^%d * lg(n)
+	 *   8 - sqrt(n)^%d * lg(n)^%d
+	 *   9 - n^%d * lg(n)^%d
+	 */
+
+	//Left-hand side exponent is n^log_b(a)
+	$lhs_ex = log($p["a"], $p["b"]);
+
+	//Right-hand side is a bit more... complicated
+	$f = $p["f"];
+	$is_mlog = ($f == 2 || $f == 3 || $f >= 6);
+
+	//Get n^? exponent
+	$rhs_ex = ($f <= 3)
+		? 0.0
+		: $p["f1"] * (($f % 2) ? 1.0 : 0.5);
+
+	//Determine the limit (0 = zero, -1 = infinity, -2 = undefined, other = ?)
+	$limit = -1.0;
+
+	//For simplicity, we are ignoring anything that involves "lg(n)".
+	if ($f == 0 || $f == 2) {
+		if ($lhs_ex == 0)
+			$limit = 1.0 / sqrt($p["f1"]);
+		else
+			$limit = -1.0; //Infinity
+	}
+	else
+	if ($f == 1 || $f == 3) {
+		if ($lhs_ex == 0)
+			$limit = 1.0 / $p["f1"];
+		else
+			$limit = -1.0; //Infinity
+	}
+	else {
+		//If the exponents are the same
+		if ($lhs_ex == $rhs_ex) {
+			if ($is_mlog)
+				$limit = 0.0;
+			else
+				$limit = 1.0;
+		}
+		else
+		if ($lhs_ex < $rhs_ex)
+			$limit = 0.0;
+		else
+			$limit = -1.0;
+	}
+
+	printf("&lt;%s VS %s -- %lg&gt;", $lhs_ex, $rhs_ex, $limit);
+
+	//If zero, it's case 3 as the right side dominates
+	if ($limit == 0.0)
+		return 3;
+
+	//If infinity, it's case 1 as the left side dominates
+	if ($limit == -1.0)
+		return 1;
+
+	//If the limit is anything else, it's case 2.
+	return 2;
+}
 
 function generate_problem() {
 	$a  = 2 + (rand() % 24);
-	$b  = 1 + (rand() % 10);
+	$b  = 2 + (rand() %  9);
 	$f1 = 2 + (rand() % 24);
 	$f2 = 2 + (rand() %  9);
 	$f3 = 2 + (rand() %  9);
@@ -138,8 +234,8 @@ for ($i = 0; $i < $n; $i++)
 		</style>
 
 		<?php
-			for ($i = 0; $i < $n; $i++) {
-				echo problem_to_string($problems[$i], $form["html"]) . "<br/>";
+			for ($i = 0; $i < sizeof($problems); $i++) {
+				echo problem_to_string($problems[$i], $form["html"]) . "&nbsp;&nbsp&nbsp;" . solve_get_case($problems[$i], $form["math"]) . "<br/>";
 			}
 		?>
 	</body>
