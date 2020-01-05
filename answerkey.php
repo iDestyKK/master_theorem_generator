@@ -139,12 +139,14 @@ function generate_solution_html($p, $form) {
 			}
 		</style>
 
-		<h1>Master Theorem Answer Key (<?php echo $n; ?> Problem<?php if ($n != 1) echo "s"; ?>, Seed: <?php echo $seed; ?>)</h1>
+		<h1>Master Theorem Answer Key</h1>
+		<h3><?php echo $n; ?> Problem<?php if ($n != 1) echo "s"; ?>, Seed: <?php echo $seed; ?></h3>
 		<p>
 			Evaluate the following recurrences.
 			Show all work.
 			If you run into case 3, assume the regularity condition is satisfied.
 			If you want to go back to the blank worksheet, <a href = "worksheet.php?n=<?php echo $n; ?>&seed=<?php echo $seed ?>">click here</a>.
+			<br/><br/>
 		</p>
 
 		<ol>
@@ -152,7 +154,7 @@ function generate_solution_html($p, $form) {
 				for ($i = 0; $i < sizeof($problems); $i++) {
 					echo "<li>";
 					echo problem_to_string($problems[$i], $form["html"]) . "<br/>";
-					echo generate_solution_html($problems[$i], $form["html"]);
+					echo generate_solution_html($problems[$i], $form["html"]) . "<br/>";
 					echo "</li>";
 				}
 			?>

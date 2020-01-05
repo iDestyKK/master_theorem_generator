@@ -62,12 +62,14 @@ for ($i = 0; $i < $n; $i++)
 			}
 		</style>
 
-		<h1>Master Theorem Worksheet (<?php echo $n; ?> Problem<?php if ($n != 1) echo "s"; ?>, Seed: <?php echo $seed; ?>)</h1>
+		<h1>Master Theorem Worksheet<h1>
+		<h3><?php echo $n; ?> Problem<?php if ($n != 1) echo "s"; ?>, Seed: <?php echo $seed; ?></h3>
 		<p>
 			Evaluate the following recurrences.
 			Show all work.
 			If you run into case 3, assume the regularity condition is satisfied.
 			You may evaluate your answers with the <a href = "answerkey.php?n=<?php echo $n; ?>&seed=<?php echo $seed ?>">answer key</a>.
+			<br/><br/>
 		</p>
 
 		<ol>
@@ -75,7 +77,7 @@ for ($i = 0; $i < $n; $i++)
 				for ($i = 0; $i < sizeof($problems); $i++) {
 					echo "<li>";
 					echo problem_to_string($problems[$i], $form["html"]);
-					echo "<br/><br/><br/><br/><br/><br/><br/>";
+					echo "<br/><br/><br/><br/><br/><br/><br/><br/>";
 					echo "</li>";
 				}
 			?>
