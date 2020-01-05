@@ -169,8 +169,6 @@ function solve_get_case($p, $form) {
 			$limit = -1.0;
 	}
 
-	printf("&lt;%s VS %s -- %lg&gt;", $lhs_ex, $rhs_ex, $limit);
-
 	//If zero, it's case 3 as the right side dominates
 	if ($limit == 0.0)
 		return 3;
